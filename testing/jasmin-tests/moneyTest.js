@@ -1,0 +1,13 @@
+import {formatCurrency} from '../../scripts/utils/money.js';
+describe('test suit : format cuurency ', () => {
+    it('convert cents into dollars', () => {
+        expect(formatCurrency(2095)).toEqual('20.95');
+    })
+    it('working with zero' , () => {
+        expect(formatCurrency(0)).toEqual('0.00')
+    })
+    
+   it('rounding to nearest cent ' , () => {
+    expect(formatCurrency(2000.5)).toEqual('20.01')
+   })
+})
