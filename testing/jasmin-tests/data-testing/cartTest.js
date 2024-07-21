@@ -1,4 +1,4 @@
-import {addToCart , cart , loadFromStorage} from '../data/cart.js'
+import {addToCart , cart , loadFromStorage} from '../../../data/cart.js'
 describe('test suit: the cart testing' , () => {
   it('add a new object to the cart' , () => {
     spyOn(localStorage, 'setItem')
