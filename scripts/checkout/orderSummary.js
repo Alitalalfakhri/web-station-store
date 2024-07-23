@@ -55,7 +55,7 @@ export function renderOrderSummary() {
               <span class="update-quantity-link link-primary">
                 Update
               </span>
-              <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
+              <span class="delete-quantity-link link-primary js-delete-link js-item-delet${matchingProduct.id}" data-product-id="${matchingProduct.id}">
                 Delete
               </span>
             </div>
