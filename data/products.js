@@ -57,33 +57,30 @@ class Clothing extends Product {
     `;
   }
 }
-export let products = []; // Global products array
+export let products = [];
 
-export function loadProducts(fun) {
+export function loadProducts(fun = () => {}) {
   const xhr = new XMLHttpRequest();
 
   xhr.addEventListener('load', () => {
-    // Ensure we parse the response and handle it
-    const response = xhr.response; // Use responseText to ensure you're working with a string
-    products = JSON.parse(response); // Update the global products array
-
-    // Transform the fetched products into instances of Product or Clothing
+    products = JSON.parse(xhr.response);
     products = products.map((productDetails) => {
       if (productDetails.type === 'clothing') {
         return new Clothing(productDetails);
       }
       return new Product(productDetails);
     });
-    
-    fun()
-    console.log('products loaded')
+
+    // Call the callback function if it's a valid function
+    if (typeof fun === 'function') {
+      fun();
+    }
+    console.log('Products loaded');
   });
 
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
-
-loadProducts(); // Call the function to load products
 
 /*
 export const products = [
