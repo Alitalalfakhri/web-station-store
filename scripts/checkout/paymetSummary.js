@@ -2,7 +2,7 @@ import {cart, loadFromStorage} from '../../data/cart.js';
 import {getProduct, loadProducts} from '../../data/products.js';
 import {getDeliveryOption} from '../../data/deliveryOptions.js';
 import {formatCurrency} from '../utils/money.js';
-loadProducts(renderPaymentSummary)
+
 export function renderPaymentSummary() {
   let productPriceCents = 0;
   let shippingPriceCents = 0;
@@ -63,7 +63,10 @@ export function renderPaymentSummary() {
       Place your order
     </button>
   `;
-
+ 
   document.querySelector('.js-payment-summary')
     .innerHTML = paymentSummaryHTML;
+    document.querySelector('.place-order-button').addEventListener('click' ,() =>{
+        window.location.href = 'orders.html'
+    })
 }
