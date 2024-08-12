@@ -141,8 +141,8 @@ export function loadProducts(fun) {
   xhr.send();
 }
 
-/*
-export const products = [
+
+export const Myproducts = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
@@ -801,10 +801,4 @@ export const products = [
       "mens"
     ]
   }
-].map((productDetails) => {
-  if (productDetails.type === 'clothing') {
-    return new Clothing(productDetails);
-  }
-  return new Product(productDetails);
-});
-*/
+];

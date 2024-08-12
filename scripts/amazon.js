@@ -1,40 +1,21 @@
-import {cart, addToCart} from '../data/cart.js';
-import {products} from '../data/products.js';
-import {formatCurrency} from './utils/money.js';
+import { cart, addToCart } from '../data/cart.js';
+import { products } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 import { loadProducts } from '../data/products.js';
-loadProducts(renderHomeGrid)
-function renderHomeGrid () {
 
+// Create an object to store selected quantities
+const selectedQuantities = {};
 
-let productsHTML = '';
+loadProducts(renderHomeGrid);
 
-products.forEach((product) => {
-  productsHTML += `
-    <div class="product-container">
-      <div class="product-image-container">
-        <img class="product-image"
-          src="${product.image}">
-      </div>
+function renderHomeGrid() {
+  let productsHTML = '';
 
-      <div class="product-name limit-text-to-2-lines">
-        ${product.name}
-      </div>
-
-      <div class="product-rating-container">
-        <img class="product-rating-stars"
-          src="${product.getStarsUrl()}">
-        <div class="product-rating-count link-primary">
-          ${product.rating.count}
-        </div>
-      </div>
-
-      <div class="product-price">
-        ${product.getPrice()}
-      </div>
-
+  function renderselect(productId) {
+    return ` 
       <div class="product-quantity-container">
-        <select>
-          <option selected value="1">1</option>
+        <select class="js-product-quantity" data-product-id="${productId}">
+          <option value="1" selected>1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
@@ -45,48 +26,83 @@ products.forEach((product) => {
           <option value="9">9</option>
           <option value="10">10</option>
         </select>
+      </div>`;
+  }
+
+  products.forEach((product) => {
+    productsHTML += `
+      <div class="product-container">
+        <div class="product-image-container">
+          <img class="product-image" src="${product.image}">
+        </div>
+
+        <div class="product-name limit-text-to-2-lines">
+          ${product.name}
+        </div>
+
+        <div class="product-rating-container">
+          <img class="product-rating-stars" src="${product.getStarsUrl()}">
+          <div class="product-rating-count link-primary">
+            ${product.rating.count}
+          </div>
+        </div>
+
+        <div class="product-price">
+          ${formatCurrency(product.priceCents)}
+        </div>
+
+        ${renderselect(product.id)}
+        ${product.extraInfoHTML()}
+
+        <div class="product-spacer"></div>
+
+        <div class="added-to-cart">
+          <img src="images/icons/checkmark.png">
+          Added
+        </div>
+
+        <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${product.id}">
+          Add to Cart
+        </button>
       </div>
-      ${product.extraInfoHTML()}
-         
-     
+    `;
+  });
 
-      
+  document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-      <div class="product-spacer"></div>
+  // Add event listeners for Select dropdowns
+  document.querySelectorAll('.js-product-quantity').forEach((select) => {
+    select.addEventListener('change', (event) => {
+      const productId = event.target.dataset.productId;
+      const quantity = parseInt(event.target.value, 10);
+      selectedQuantities[productId] = quantity;
+      console.log(`Selected value for product ${productId}: ${quantity}`);
+    });
+  });
 
-      <div class="added-to-cart">
-        <img src="images/icons/checkmark.png">
-        Added
-      </div>
+  // Add event listeners for Add to Cart buttons
+  document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId;
+      const quantity = selectedQuantities[productId] || 1; // Default to 1 if no selection
+      console.log(`Adding product ${productId} with quantity ${quantity} to cart`);
+      addToCart(productId, quantity);
+      updateCartQuantity();
+    });
+  });
 
-      <button class="add-to-cart-button button-primary js-add-to-cart"
-      data-product-id="${product.id}">
-        Add to Cart
-      </button>
-    </div>
-  `;
-});
-
-document.querySelector('.js-products-grid').innerHTML = productsHTML;
+  updateCartQuantity();
+}
 
 function updateCartQuantity() {
   let cartQuantity = 0;
 
+  // Accumulate quantity from cart
   cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
+    cartQuantity += cartItem.quantity; // Assuming cartItem has quantity property
   });
 
-  document.querySelector('.js-cart-quantity')
-    .innerHTML = cartQuantity;
-}
+  console.log(`Total cart quantity: ${cartQuantity}`);
 
-document.querySelectorAll('.js-add-to-cart')
-  .forEach((button) => {
-    button.addEventListener('click', () => {
-      const productId = button.dataset.productId;
-      addToCart(productId);
-      updateCartQuantity();
-    });
-  });
-  updateCartQuantity()
+  document.querySelector('.js-cart-quantity').textContent = cartQuantity;
 }

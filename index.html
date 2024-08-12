@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Example</title>
+</head>
+<body>
+  
+    <select id="mySelect">
+        <option value="value1">Option 1</option>
+        <option value="value2">Option 2</option>
+        <option value="value3">Option 3</option>
+    </select>
+
+    <p id="selectedValue">Selected value will appear here.</p>
+
+    <script >
+        
+        function update(){
+          
+       
+        }
+        mySelect.addEventListener('change' , () => {
+            update()
+        })
+        update()
+
+        
+
+    </script>
+</body>
+</html>
