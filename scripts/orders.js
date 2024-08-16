@@ -1,84 +1,96 @@
-/*   the stategey is 
-1- we gonna generate the html by javacript : 
- - in order placed time we need to get a date of clicking place 
-  your order in checkout.js and we need to use it here
-  - we can get the total price from paymentsummary.js
-  - we gonna ignore the order id
- 2 - we need to take every cart we get generate the html and 
-  response with empty cart so in each order we get the cart 
-   and generate the html for it and response empty one and 
-   the loop stay like this
-
-
-*/
 
 import { cart } from '../data/cart.js';
 import { formatCurrency } from './utils/money.js';
-import { renderPaymentSummary } from './checkout/paymetSummary.js';
+import { Myproducts, products , getProduct} from '../data/products.js';
 
-let orderHTML;
-function renderOrders(){
-    let ordersCart = []
-    ordersCart = cart;
-    console.log(ordersCart)
-
-ordersCart.forEach( (item) => {
-   
-    document.querySelector('.orders-grid').innerHTML = '';
-    orderHTML += `
-    <div class="order-container">
-          
-          <div class="order-header">
-            <div class="order-header-left-section">
-              <div class="order-date">
-                <div class="order-header-label">Order Placed:</div>
-                <div>August 12</div>
-              </div>
-              <div class="order-total">
-                <div class="order-header-label">Total:</div>
-                <div>$120</div>
-              </div>
+export function renderOrders() {
+    
+    const orderDate = localStorage.getItem('orderDate');
+    const orderTotalCents = localStorage.getItem('orderTotalCents');
+    const orderId =  localStorage.getItem('randomId');
+    
+    const headerHTML = `
+        <div class="order-header-container">
+            <div class="order-header">
+                <div class="order-header-left-section">
+                    <div class="order-date">
+                        <div class="order-header-label">Order Placed:</div>
+                        <div>${orderDate}</div> <!-- Dynamic date -->
+                    </div>
+                    <div class="order-total">
+                        <div class="order-header-label">Total:</div>
+                        <div>${formatCurrency(orderTotalCents)}</div> <!-- Dynamic total price -->
+                    </div>
+                </div>
+                <div class="order-header-right-section">
+                    <div class="order-header-label">Order ID:</div>
+                    <div>${orderId}</div> <!-- Placeholder if not used -->
+                </div>
             </div>
+        </div>`
+    ;
 
-            <div class="order-header-right-section">
-              <div class="order-header-label">Order ID:</div>
-              <div>27cba69d-4c3d-4098-b42d-ac7fa62b7664</div>
+    let orderDetailsHTML = '';
+
+    // Generate details for each item in the cart
+    cart.forEach((item) => {
+        let matchingProduct
+        Myproducts.forEach((product) => {
+           if (item.productId === product.id){
+             matchingProduct = product;
+           
+           }
+        })
+        
+        orderDetailsHTML += `
+      
+            <div class="order-details-grid">
+                <div class="product-image-container">
+                    <img src="${matchingProduct.image}">
+                   
+                </div>
+
+                <div class="product-details">
+                    <div class="product-name">
+                        ${matchingProduct.name}
+                    </div>
+                    <div class="product-delivery-date">
+                        Arriving on: August 15
+                    </div>
+                    <div class="product-quantity">
+                        Quantity: ${item.quantity}
+                    </div>
+                    
+                </div>
+
+                <div class="product-actions">
+                    <a href="tracking.html">
+                        <button class="track-package-button button-secondary">
+                            Track package
+                        </button>
+                    </a>
+                </div>
             </div>
-          </div>
+   `     ;
+    });
 
-          <div class="order-details-grid">
-            <div class="product-image-container">
-              <img src="images/products/athletic-cotton-socks-6-pairs.jpg">
-            </div>
+    // Combine header and item details
+    const ordersHTML = `
+        <div class="order-section">
+            ${headerHTML}
+            ${orderDetailsHTML}
+        </div>`
+    ;
 
-            <div class="product-details">
-              <div class="product-name">
-                Black and Gray Athletic Cotton Socks - 6 Pairs
-              </div>
-              <div class="product-delivery-date">
-                Arriving on: August 15
-              </div>
-              <div class="product-quantity">
-                Quantity: 1
-              </div>
-              <button class="buy-again-button button-primary">
-                <img class="buy-again-icon" src="images/icons/buy-again.png">
-                <span class="buy-again-message">Buy it again</span>
-              </button>
-            </div>
+    // Update the DOM with the combined HTML
+    document.querySelector('.orders-grid').innerHTML = ordersHTML;
 
-            <div class="product-actions">
-              <a href="tracking.html">
-                <button class="track-package-button button-secondary">
-                  Track package
-                </button>
-              </a>
-            </div>
+    // Clear the cart
+    cart.length = 0;
+    console.log(cart);
 
-
-        </div> `
-        document.querySelector('.orders-grid').innerHTML += orderHTML
-   
-}); 
+    return cart;
 }
-renderOrders() 
+
+// Call the function to render orders
+renderOrders();
