@@ -124,9 +124,11 @@ function generateUniqueId(length) {
   // Check if user_id already exists in local storage
   if (!localStorage.getItem('user_id')) {
       // No ID found, generate a new one and store it
-      const userId = generateUniqueId(20);
+      const userId = generateUniqueId(15);
       localStorage.setItem('user_id', userId);
+      
   }
 })();
+console.log(localStorage.getItem('user_id'))
 
 }
