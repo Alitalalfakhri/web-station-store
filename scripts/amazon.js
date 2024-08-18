@@ -105,4 +105,28 @@ function updateCartQuantity() {
   console.log(`Total cart quantity: ${cartQuantity}`);
 
   document.querySelector('.js-cart-quantity').textContent = cartQuantity;
+
+  // init-user-id.js
+
+// Function to generate a unique ID
+function generateUniqueId(length) {
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+// Initialize and set the user ID in local storage
+(function initializeUserId() {
+  // Check if user_id already exists in local storage
+  if (!localStorage.getItem('user_id')) {
+      // No ID found, generate a new one and store it
+      const userId = generateUniqueId(20);
+      localStorage.setItem('user_id', userId);
+  }
+})();
+
 }
