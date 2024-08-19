@@ -154,3 +154,9 @@
   padding: 8px;
   border-radius: 50px;
 }
+.footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}

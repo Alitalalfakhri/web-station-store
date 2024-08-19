@@ -1,5 +1,5 @@
 .amazon-header {
-  background-color: rgb(19, 25, 33);
+  background-color: rgb(78, 110, 25);
   color: white;
   padding-left: 15px;
   padding-right: 15px;
@@ -31,7 +31,7 @@
   border-radius: 2px;
   cursor: pointer;
   text-decoration: none;
-  border: 1px solid rgba(0, 0, 0, 0);
+  
 }
 
 .header-link:hover {
@@ -40,6 +40,7 @@
 
 .amazon-logo {
   width: 100px;
+  height: 60px;
   margin-top: 5px;
 }
 
@@ -81,7 +82,7 @@
 }
 
 .search-button {
-  background-color: rgb(254, 189, 105);
+  background-color: hsl(69, 65%, 55%);
   border: none;
   width: 45px;
   height: 40px;
@@ -136,7 +137,7 @@
 }
 
 .cart-quantity {
-  color: rgb(240, 136, 4);
+  color: rgb(91, 175, 161);
   font-size: 16px;
   font-weight: 700;
 

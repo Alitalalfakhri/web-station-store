@@ -28,13 +28,24 @@
 
 .amazon-logo {
   width: 100px;
-  margin-top: 12px;
+  margin-top: 90px;
 }
 
 .amazon-mobile-logo {
   display: none;
+   height: 100px;
 }
-
+.checkoutHome{
+  background-color: rgb(71, 160, 83);
+  width: 70px;
+  border-radius: 30px;
+}
+.checkoutHome:hover{
+  background-color: #45c545;
+}
+.checkoutHome:active{
+  background-color: #45c545;
+}
 /* @media is used to create responsive design (making the
    website look good on any screen size). This @media
    means when the screen width is 575px or less, different
