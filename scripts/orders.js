@@ -86,9 +86,7 @@ export function renderOrders() {
                     <div class="product-quantity">status : ${status}</div>
                 </div>
                 <div class="product-actions">
-                    <a href="tracking.html">
-                        <button class="track-package-button button-secondary">Track package</button>
-                    </a>
+                   
                 </div>
             </div>
         `;
