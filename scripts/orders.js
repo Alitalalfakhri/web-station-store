@@ -34,7 +34,7 @@ export function renderOrders() {
                 <div class="order-header-left-section">
                     <div class="order-total">
                         <div class="order-header-label">Last order value:</div>
-                        <div>${formatCurrency(orderTotalCents)}</div>
+                        <div>$${formatCurrency(orderTotalCents)}</div>
                     </div>
                 </div>
                 <div class="order-header-right-section">
