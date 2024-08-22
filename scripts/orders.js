@@ -63,7 +63,7 @@ export function renderOrders() {
          if(dateDifrence >= 4){
             status = 'working on'
         }else if(dateDifrence >= 2){
-            status = 'final tochs'
+            status = 'final touchs'
         }
         else if (dateDifrence === 1){
             status = 'on the road'
